@@ -1,0 +1,80 @@
+@page "/AgregarLibro"
+@inject ILibreriaService LibreriaService
+@inject NavigationManager NavigationManager
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
+
+<PageTitle>Agregar Libros</PageTitle>
+
+<div class="Titulo">
+<ModuleTitle title="Agregar Libro"/>
+</div>
+
+     <style>
+     .Titulo{
+      font-family: 'Poiret One', cursive;
+     }
+     </style>
+
+    <style> 
+    .libreria-container{
+     font-family: 'Dosis', sans-serif;
+    }
+    </style>
+
+<div class="libreria-container">
+<EditForm Model="@libreria" OnSubmit="@Save">
+    <div class="row">
+        <div class="col-8 form-group">
+            <label for="title" class="col-form-label">Nombre Libro</label>
+            <InputText id="title" @bind-Value="libreria.Titulo" required class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8 form-group">
+            <label for="Imagen" class="col-form-label">Link Imagen</label>
+            <InputText id="Imagen" @bind-Value="libreria.Imagen" required class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8 form-group">
+            <label for="Categoria" class="col-form-label">Categoria</label>
+            <InputText id="Categoria" @bind-Value="libreria.Categoria" required class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8 form-group">
+            <label for="Autor" class="col-form-label">Autor</label>
+            <InputText id="Autor" @bind-Value="libreria.Autor" required class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8 form-group">
+            <label for="Editorial" class="col-form-label">Editorial</label>
+            <InputText id="Editorial" @bind-Value="libreria.Editorial" required class="form-control"/>
+    </div>
+    </div>
+    <button class="btn btn-primary" type="submit"> Guardar</button>
+</EditForm>
+</div>
+<br>
+<button class="btn btn-dark" @onclick="@(()=> NavigationManager.NavigateTo("/Libreria"))">Regresar</button>
+
+@code
+{ 
+    private Libreria libreria = new();
+
+    private async Task Save()
+    {   
+        await LibreriaService.Add(libreria);
+        NavigationManager.NavigateTo("/Libreria");
+    }    
+
+}
